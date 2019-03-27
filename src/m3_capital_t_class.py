@@ -21,9 +21,9 @@ def main():
     print(' to run the testing code as you complete the TODOs.')
 
     run_test_simple_t()
-    # run_test_set_colors()
-    # run_test_move_by()
-    # run_test_clone()
+    run_test_set_colors()
+    run_test_move_by()
+    run_test_clone()
 
 
 def run_test_simple_t():
@@ -170,13 +170,16 @@ class CapitalT(object):
         #   and *** NO OTHER INSTANCE VARIABLES. ***
         #   Note: Implement   attach_to   before testing this __init__ method.
         # ---------------------------------------------------------------------
+
+
         hrect_ULcorner=rg.Point(intersection_center.x-width/2,intersection_center.y-letter_thickness/2)
         hrect_LRcorner=rg.Point(intersection_center.x+width/2,intersection_center.y+letter_thickness/2)
         self.h_rect=rg.Rectangle(hrect_ULcorner,hrect_LRcorner)
 
-        vrect_ULcorner = rg.Point(intersection_center.x-letter_thickness / 2,intersection_center.y-letter_thickness / 2)
+        vrect_ULcorner = rg.Point(intersection_center.x-letter_thickness / 2, intersection_center.y-letter_thickness / 2)
         vrect_LRcorner = rg.Point(intersection_center.x+letter_thickness / 2, intersection_center.y+height-letter_thickness / 2)
         self.v_rect = rg.Rectangle(vrect_ULcorner, vrect_LRcorner)
+
 
     def attach_to(self, window):
         """
@@ -231,7 +234,7 @@ class CapitalT(object):
           :type outline_color: str
         """
         # ---------------------------------------------------------------------
-        # TODO: 5.
+        # done: 5.
         #   READ the above specification, including the Example.
         #   Implement this method, then TEST it by:
         #     a. Un-comment the call to its test function, in main.  Run.
@@ -239,6 +242,12 @@ class CapitalT(object):
         #     c. Compare the graphics window to the  set_colors.pdf   pictures.
         #        They should look exactly the same as each other.
         # ---------------------------------------------------------------------
+        self.v_rect.fill_color = fill_color
+        self.h_rect.fill_color= fill_color
+
+        self.v_rect.outline_color = outline_color
+        self.h_rect.outline_color = outline_color
+
 
     def move_by(self, dx, dy):
         """
@@ -264,7 +273,7 @@ class CapitalT(object):
           :type dy: int
         """
         # ---------------------------------------------------------------------
-        # TODO: 6.
+        # done: 6.
         #   READ the above specification, including the Example.
         #   Implement this method, then TEST it by:
         #     a. Un-comment the call to its test function, in main.  Run.
@@ -275,6 +284,14 @@ class CapitalT(object):
         #        Note: the pdf shows the different locations that
         #        the T moves through, but there is only one T at any moment.
         # ---------------------------------------------------------------------
+
+        self.h_rect.corner_1 = rg.Point(self.h_rect.corner_1.x + dx, self.h_rect.corner_1.y + dy)
+        self.h_rect.corner_2 = rg.Point(self.h_rect.corner_2.x + dx, self.h_rect.corner_2.y + dy)
+
+        self.v_rect.corner_1 = rg.Point(self.v_rect.corner_1.x + dx, self.v_rect.corner_1.y + dy)
+        self.v_rect.corner_2 = rg.Point(self.v_rect.corner_2.x + dx, self.v_rect.corner_2.y + dy)
+
+
 
     def clone(self):
         """
@@ -309,8 +326,17 @@ class CapitalT(object):
         # IMPORTANT RESTRICTION: You are NOT permitted to add any instance
         # variables beyond  h_rect  and  v_rect, at any point of this exercise.
         #######################################################################
+        hcorn1_UL=self.h_rect.get_upper_left_corner()
+        hcorn2_LR=self.h_rect.get_lower_right_corner()
+        letter_thick=hcorn2_LR.y-hcorn1_UL.y
+        width_c=hcorn2_LR.x-hcorn1_UL.x
+        print(hcorn1_UL,hcorn2_LR,width_c)
+        height_c=abs(self.v_rect.corner_1.y-self.v_rect.corner_2.y)
+        intersect_p=rg.Point(hcorn2_LR.x-width_c/2, hcorn1_UL.y+letter_thick/2)
 
-
+        clone=CapitalT(intersect_p,width_c,height_c,letter_thick)
+        clone.set_colors(self.h_rect.fill_color,self.h_rect.outline_color)
+        return clone
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
