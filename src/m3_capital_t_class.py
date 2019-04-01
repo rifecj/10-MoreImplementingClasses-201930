@@ -330,7 +330,6 @@ class CapitalT(object):
         hcorn2_LR=self.h_rect.get_lower_right_corner()
         letter_thick=hcorn2_LR.y-hcorn1_UL.y
         width_c=hcorn2_LR.x-hcorn1_UL.x
-        print(hcorn1_UL,hcorn2_LR,width_c)
         height_c=abs(self.v_rect.corner_1.y-self.v_rect.corner_2.y)
         intersect_p=rg.Point(hcorn2_LR.x-width_c/2, hcorn1_UL.y+letter_thick/2)
 
